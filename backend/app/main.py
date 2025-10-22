@@ -9,7 +9,7 @@ app = FastAPI();
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://ployspeak.vercel.app", "http://localhost:3000"],
+    allow_origins=["https://polyspeak.vercel.app", "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
