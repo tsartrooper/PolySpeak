@@ -14,7 +14,7 @@ function App() {
     if(!text.trim()) return;
     setLoading(true);
     try{
-      const response = await axios.post("http://localhost:8000/speak", { text }, {
+      const response = await axios.post("https://polyspeak.onrender.com/speak", { text }, {
         responseType: "blob"
       });
 
