@@ -5,12 +5,11 @@ import requests
 import io
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-
 app = FastAPI();
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://ployspeak.vercel.app"],
+    allow_origins=["https://ployspeak.vercel.app", "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
@@ -24,10 +23,14 @@ class SpeakRequest(BaseModel):
     text: str
 
 
+
+
 @app.post("/speak")
 async def speak(req: SpeakRequest):
     
-    res = requests.post(CLOUDFARE_TTS_URL, json={"text": req.text})
+    roman_text = transliterate(req.text, DEVANAGARI, ITRANS)
+    
+    res = requests.post(CLOUDFARE_TTS_URL, json={"text": roman_text})
     
     if res.status_code != 200 and res.status_code != 201:
         return {"error": "TTS service failed"}
